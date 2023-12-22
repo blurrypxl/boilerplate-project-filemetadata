@@ -16,10 +16,14 @@ app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-app.post('/api/analyse', analyse.single('upfile'), function (req, res, next) {
-  const file = req.file.upfile
-  res.file(file)
-})
+app.post("/api/fileanalyse",
+  analyse.single("upfile"),
+  function (req, res, next) {
+    const file = req.file;
+    // console.log(file);
+    res.json({ name: file.originalname, type: file.mimetype, size: file.size })
+  },
+);
 
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
